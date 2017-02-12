@@ -21,7 +21,13 @@ class ManageUsers
 
     function registerUsers($username, $password, $ip_address, $time, $date)
     {
-
+        $query = $this->link->prepare("INSERT into users (username, password, ip_address, reg_date, reg_time) VALUES (?, ?, ?, ?, ?)");
+        $values =array($username, $password, $ip_address, $time, $date);
+        $query->execute($values);
+        $counts = $query->rowCount();
+        return $counts;
     }
 
 }
+$users = new ManageUsers();
+echo $users->registerUsers('bob','123', 'localhost','12:00', '');
